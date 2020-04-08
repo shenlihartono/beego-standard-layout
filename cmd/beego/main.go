@@ -1,3 +1,4 @@
+// Beego Golang API using the Standard Package Layout.
 package main
 
 import (

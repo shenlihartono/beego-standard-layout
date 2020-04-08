@@ -20,6 +20,11 @@ func init() {
 				&controllers.HealthController{},
 			),
 		),
+		beego.NSNamespace("/structs",
+			beego.NSInclude(
+				&controllers.StructController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

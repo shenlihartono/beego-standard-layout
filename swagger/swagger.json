@@ -27,12 +27,53 @@
                     }
                 }
             }
+        },
+        "/structs/": {
+            "post": {
+                "tags": [
+                    "structs"
+                ],
+                "description": "Create Struct",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The struct content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/groot.StructRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/groot.Struct"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "groot.Struct": {
+            "title": "Struct",
+            "type": "object"
+        },
+        "groot.StructRequest": {
+            "title": "StructRequest",
+            "type": "object"
         }
     },
     "tags": [
         {
             "name": "health",
             "description": "HealthController is controller for Health operation.\n"
+        },
+        {
+            "name": "structs",
+            "description": "Operations about struct\n"
         }
     ]
 }

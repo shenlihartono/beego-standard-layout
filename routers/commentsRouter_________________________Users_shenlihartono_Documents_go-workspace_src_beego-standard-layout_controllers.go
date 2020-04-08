@@ -16,4 +16,13 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["beego-standard-layout/controllers:StructController"] = append(beego.GlobalControllerRouter["beego-standard-layout/controllers:StructController"],
+        beego.ControllerComments{
+            Method: "Create",
+            Router: `/`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
 }
