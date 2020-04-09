@@ -5,46 +5,30 @@ import (
 	"testing"
 )
 
-func TestResponseSuccess(t *testing.T) {
+func TestResponse_New(t *testing.T) {
 	tests := []struct {
-		name string
-		body interface{}
-		want Response
+		name   string
+		status int
+		result interface{}
+		want   Response
 	}{
 		{
-			name: "generate response success",
-			body: "hello",
-			want: Response{"result": "hello"},
+			name:   "generate response success",
+			status: 200,
+			result: "hello",
+			want:   Response{"status": 200, "result": "hello"},
+		},
+		{
+			name:   "generate response failed",
+			status: 400,
+			result: "world",
+			want:   Response{"status": 400, "result": "world"},
 		},
 	}
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			have := Success(tc.body)
-
-			if diff := deep.Equal(have, tc.want); diff != nil {
-				t.Error(diff)
-			}
-		})
-	}
-}
-
-func TestResponseError(t *testing.T) {
-	tests := []struct {
-		name    string
-		message string
-		want    Response
-	}{
-		{
-			name:    "generate response error",
-			message: "something wrong",
-			want:    Response{"error": "something wrong"},
-		},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			have := Error(tc.message)
+			have := New(tc.status, tc.result)
 
 			if diff := deep.Equal(have, tc.want); diff != nil {
 				t.Error(diff)

@@ -3,10 +3,6 @@ package response
 
 type Response map[string]interface{}
 
-func Success(body interface{}) Response {
-	return Response{"result": body}
-}
-
-func Error(msg string) Response {
-	return Response{"error": msg}
+func New(status int, body interface{}) Response {
+	return Response{"status": status, "result": body}
 }

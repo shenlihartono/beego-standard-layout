@@ -13,4 +13,4 @@ How to run locally:
 3. go run cmd/beego/main.go
 ``` 
 
-Should you decide not to use Swagger for Router/Controller management, you can use the router management way provided at beego website [here](https://beego.me/docs/mvc/controller/router.md)
+There's another style of Router/Controller setup using Beego, you can find it [here](https://beego.me/docs/mvc/controller/router.md)
