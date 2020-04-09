@@ -50,3 +50,22 @@ func (s StructService) Structs() Response {
 
 	return NewResponse(StatusOK, str)
 }
+
+func (s StructService) UpdateStruct(ID string, request groot.StructRequest) Response {
+	str, err := s.repo.Struct(ID)
+	if err != nil {
+		if err.Error() == errStructNotFound.Error() {
+			return NewResponse(StatusNotFound, "struct not found")
+		}
+
+		return NewResponse(StatusInternalServerError, "internal server error")
+	}
+
+	str.Value = request.Value
+	err = s.repo.Update(str)
+	if err != nil {
+		return NewResponse(StatusInternalServerError, "internal server error")
+	}
+
+	return NewResponse(StatusOK, str)
+}

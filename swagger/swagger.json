@@ -80,14 +80,52 @@
                 "tags": [
                     "structs"
                 ],
-                "description": "Find 1 struct",
+                "description": "Find one struct by id",
                 "parameters": [
                     {
                         "in": "path",
                         "name": "structId",
-                        "description": "the struct id you want to get",
+                        "description": "the struct id you want to find",
                         "required": true,
                         "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{result} the Struct"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "404": {
+                        "description": "struct not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "structs"
+                ],
+                "description": "Update a Struct",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "structId",
+                        "description": "the struct id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The struct content, e.q {value: 1}",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/groot.StructRequest"
+                        }
                     }
                 ],
                 "responses": {

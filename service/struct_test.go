@@ -150,3 +150,67 @@ func TestFindStructs(t *testing.T) {
 		})
 	}
 }
+
+var (
+	updateSuccessRepository = mock.StructRepository{
+		TheStruct: groot.Struct{ID: "ABC123", Value: 1500},
+	}
+	updateSuccessResult   = groot.Struct{ID: "ABC123", Value: 2000}
+	updateSuccessResponse = Response{Status: StatusOK, Result: updateSuccessResult}
+
+	updateFailedOtherErrorRepository = mock.StructRepository{ErrUpdate: errors.New("error update struct")}
+	updateFailedResponse             = Response{Status: 500, Result: "internal server error"}
+
+	updateRequest = groot.StructRequest{Value: 2000}
+)
+
+func TestUpdateStruct(t *testing.T) {
+	tests := []struct {
+		name     string
+		repo     groot.StructRepository
+		structId string
+		request  groot.StructRequest
+		wantResp Response
+	}{
+		{
+			name:     "failed find struct, not found",
+			repo:     failedFindNotFoundRepository,
+			structId: "ABC123",
+			request:  updateRequest,
+			wantResp: findStructNotFoundResponse,
+		},
+		{
+			name:     "failed find struct, other error",
+			repo:     failedFindOtherErrRepository,
+			structId: "ABC123",
+			request:  updateRequest,
+			wantResp: findStructOtherErrResponse,
+		},
+		{
+			name:     "failed update struct, internal error",
+			repo:     updateFailedOtherErrorRepository,
+			structId: "ABC123",
+			request:  updateRequest,
+			wantResp: updateFailedResponse,
+		},
+		{
+			name:     "success update struct",
+			repo:     updateSuccessRepository,
+			structId: "ABC123",
+			request:  updateRequest,
+			wantResp: updateSuccessResponse,
+		},
+	}
+
+	for i, tc := range tests {
+		no := i + 1
+		t.Run(fmt.Sprintf("Test no %d %s", no, tc.name), func(t *testing.T) {
+			svc := NewStructService(tc.repo)
+			resp := svc.UpdateStruct(tc.structId, tc.request)
+
+			if diff := deep.Equal(resp, tc.wantResp); diff != nil {
+				t.Error(diff)
+			}
+		})
+	}
+}

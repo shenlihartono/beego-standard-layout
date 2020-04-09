@@ -15,12 +15,12 @@ type StructRepository map[string]groot.Struct
 
 func NewStructRepository() StructRepository {
 	// setup the initial structs in repository
-	s := map[string]groot.Struct{
+	repo := map[string]groot.Struct{
 		"id1": {"id1", 1},
 		"id2": {"id2", 2},
 	}
 
-	return s
+	return repo
 }
 
 func (s StructRepository) Create(req groot.StructRequest) (groot.Struct, error) {
@@ -52,14 +52,10 @@ func (s StructRepository) Structs() ([]groot.Struct, error) {
 	return structs, nil
 }
 
-func (s StructRepository) Update(ID string, req groot.StructRequest) error {
-	// do find by ID and update/replace the value
-	if _, ok := s[ID]; ok {
-		s[ID] = groot.Struct{ID: ID, Value: req.Value}
-		return nil
-	}
+func (s StructRepository) Update(req groot.Struct) error {
+	s[req.ID] = req
 
-	return errors.New("struct not found")
+	return nil
 }
 
 func (s StructRepository) Delete(ID string) {

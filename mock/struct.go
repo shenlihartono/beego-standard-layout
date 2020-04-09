@@ -24,7 +24,7 @@ func (s StructRepository) Structs() ([]groot.Struct, error) {
 	return s.TheStructs, s.ErrStruct
 }
 
-func (s StructRepository) Update(ID string, req groot.StructRequest) error {
+func (s StructRepository) Update(req groot.Struct) error {
 	return s.ErrUpdate
 }
 

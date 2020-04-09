@@ -10,7 +10,7 @@ type StructRepository interface {
 	Create(StructRequest) (Struct, error)
 	Struct(ID string) (Struct, error)
 	Structs() ([]Struct, error)
-	Update(ID string, req StructRequest) error
+	Update(Struct) error
 	Delete(ID string)
 }
 
