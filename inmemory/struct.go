@@ -58,6 +58,8 @@ func (s StructRepository) Update(req groot.Struct) error {
 	return nil
 }
 
-func (s StructRepository) Delete(ID string) {
+func (s StructRepository) Delete(ID string) error {
 	delete(s, ID)
+
+	return nil
 }

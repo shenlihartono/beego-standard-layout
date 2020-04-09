@@ -11,7 +11,7 @@ type StructRepository interface {
 	Struct(ID string) (Struct, error)
 	Structs() ([]Struct, error)
 	Update(Struct) error
-	Delete(ID string)
+	Delete(ID string) error
 }
 
 type StructRequest struct {
