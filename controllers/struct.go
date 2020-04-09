@@ -66,3 +66,23 @@ func (s *StructController) Struct() {
 	s.Data["json"] = resp.Result
 	s.ServeJSON()
 }
+
+// @Description Find all structs
+// @Success 200 {result} the Struct
+// @Failure 404 struct not found
+// @Failure 500 internal server error
+// @router / [get]
+func (s *StructController) Structs() {
+	//TODO need to figure out way to diff impl such as postgres / in-memory repo
+	repo := inmemory.NewStructRepository()
+	svc := service.NewStructService(repo)
+	resp := svc.Structs()
+
+	if resp.Status != 200 {
+		body := resp.Result.(string)
+		s.CustomAbort(resp.Status, body)
+	}
+
+	s.Data["json"] = resp.Result
+	s.ServeJSON()
+}

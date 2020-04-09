@@ -105,3 +105,48 @@ func TestFindStruct(t *testing.T) {
 		})
 	}
 }
+
+var (
+	findSuccessResults = []groot.Struct{
+		{ID: "one", Value: 1},
+		{ID: "two", Value: 2},
+	}
+	findStructsSuccessRepository = mock.StructRepository{TheStructs: findSuccessResults}
+	findStructsSuccessResponse   = Response{Status: 200, Result: findSuccessResults}
+)
+
+func TestFindStructs(t *testing.T) {
+	tests := []struct {
+		name     string
+		repo     groot.StructRepository
+		wantResp Response
+	}{
+		{
+			name:     "success find all struct",
+			repo:     findStructsSuccessRepository,
+			wantResp: findStructsSuccessResponse,
+		},
+		{
+			name:     "failed find all struct, not found",
+			repo:     failedFindNotFoundRepository,
+			wantResp: findStructNotFoundResponse,
+		},
+		{
+			name:     "failed find all struct, other error",
+			repo:     failedFindOtherErrRepository,
+			wantResp: findStructOtherErrResponse,
+		},
+	}
+
+	for i, tc := range tests {
+		no := i + 1
+		t.Run(fmt.Sprintf("Test no %d %s", no, tc.name), func(t *testing.T) {
+			svc := NewStructService(tc.repo)
+			resp := svc.Structs()
+
+			if diff := deep.Equal(resp, tc.wantResp); diff != nil {
+				t.Error(diff)
+			}
+		})
+	}
+}

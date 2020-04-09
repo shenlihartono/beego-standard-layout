@@ -37,3 +37,16 @@ func (s StructService) Struct(ID string) Response {
 
 	return NewResponse(StatusOK, str)
 }
+
+func (s StructService) Structs() Response {
+	str, err := s.repo.Structs()
+	if err != nil {
+		if err.Error() == errStructNotFound.Error() {
+			return NewResponse(StatusNotFound, "struct not found")
+		}
+
+		return NewResponse(StatusInternalServerError, "internal server error")
+	}
+
+	return NewResponse(StatusOK, str)
+}

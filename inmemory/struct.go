@@ -9,9 +9,12 @@ import (
 	"time"
 )
 
+var errStructNotFound = errors.New("struct not found")
+
 type StructRepository map[string]groot.Struct
 
 func NewStructRepository() StructRepository {
+	// setup the initial structs in repository
 	s := map[string]groot.Struct{
 		"id1": {"id1", 1},
 		"id2": {"id2", 2},
@@ -33,12 +36,12 @@ func (s StructRepository) Struct(ID string) (groot.Struct, error) {
 		return v, nil
 	}
 
-	return groot.Struct{}, errors.New("struct not found")
+	return groot.Struct{}, errStructNotFound
 }
 
 func (s StructRepository) Structs() ([]groot.Struct, error) {
 	if len(s) < 1 {
-		return nil, errors.New("no structs available")
+		return nil, errStructNotFound
 	}
 
 	var structs []groot.Struct

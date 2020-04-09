@@ -20,6 +20,17 @@ paths:
         "200":
           description: '{string} service up and running!'
   /structs/:
+    get:
+      tags:
+      - structs
+      description: Find all structs
+      responses:
+        "200":
+          description: '{result} the Struct'
+        "404":
+          description: struct not found
+        "500":
+          description: internal server error
     post:
       tags:
       - structs
