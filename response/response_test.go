@@ -16,13 +16,13 @@ func TestResponse_New(t *testing.T) {
 			name:   "generate response success",
 			status: 200,
 			result: "hello",
-			want:   Response{"status": 200, "result": "hello"},
+			want:   Response{Status: 200, Result: "hello"},
 		},
 		{
 			name:   "generate response failed",
 			status: 400,
 			result: "world",
-			want:   Response{"status": 400, "result": "world"},
+			want:   Response{Status: 400, Result: "world"},
 		},
 	}
 
