@@ -17,8 +17,8 @@ func NewStructService(repo groot.StructRepository) StructService {
 func (s StructService) CreateStruct(request groot.StructRequest) response.Response {
 	str, err := s.repo.Create(request)
 	if err != nil {
-		return response.Error(err.Error())
+		return response.New(StatusInternalServerError, "internal server error")
 	}
 
-	return response.Success(str)
+	return response.New(StatusOK, str)
 }

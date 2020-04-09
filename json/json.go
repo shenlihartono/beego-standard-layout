@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var errInvalidRequest = errors.New("invalid request")
+var errInvalidRequest = errors.New("bad request")
 
 // ConvertRequest is function to convert from request body to specified struct.
 func ConvertRequest(body []byte, v interface{}) error {

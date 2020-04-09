@@ -12,10 +12,10 @@ import (
 
 var (
 	createSuccessResult     = groot.Struct{ID: "abc123", Value: 500}
-	createSuccessResponse   = response.Response{"result": createSuccessResult}
+	createSuccessResponse   = response.Response{Status: 200, Result: createSuccessResult}
 	createSuccessRepository = mock.StructRepository{TheStruct: createSuccessResult}
 
-	createFailedResponse   = response.Response{"error": "failed create struct"}
+	createFailedResponse   = response.Response{Status: 500, Result: "internal server error"}
 	createFailedRepository = mock.StructRepository{ErrCreate: errors.New("failed create struct")}
 
 	createRequest = groot.StructRequest{}

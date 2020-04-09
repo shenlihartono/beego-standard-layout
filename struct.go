@@ -15,5 +15,5 @@ type StructRepository interface {
 }
 
 type StructRequest struct {
-	Value int
+	Value int `json:"value"`
 }

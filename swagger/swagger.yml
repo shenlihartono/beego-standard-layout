@@ -27,19 +27,18 @@ paths:
       parameters:
       - in: body
         name: body
-        description: The struct content
+        description: 'The struct content, e.q {value: 1}'
         required: true
         schema:
           $ref: '#/definitions/groot.StructRequest'
       responses:
         "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/groot.Struct'
+          description: '{result} groot.Struct'
+        "400":
+          description: bad request
+        "500":
+          description: internal server error
 definitions:
-  groot.Struct:
-    title: Struct
-    type: object
   groot.StructRequest:
     title: StructRequest
     type: object

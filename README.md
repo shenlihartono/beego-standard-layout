@@ -14,3 +14,6 @@ How to run locally:
 ``` 
 
 There's another style of Router/Controller setup using Beego, you can find it [here](https://beego.me/docs/mvc/controller/router.md)
+
+### Warning
+There may be warning such as `0001 Cannot find the object: groot.StructRequest` this is because we don't use package models in this project. It is fine, just ignore it.
