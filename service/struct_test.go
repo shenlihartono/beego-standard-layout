@@ -214,3 +214,57 @@ func TestUpdateStruct(t *testing.T) {
 		})
 	}
 }
+
+var (
+	successDeleteRepository     = mock.StructRepository{}
+	successDeleteStructResponse = Response{Status: StatusOK, Result: "success delete struct"}
+
+	failedDeleteOtherErrorRepository = mock.StructRepository{ErrDelete: errors.New("error delete struct")}
+	deleteFailedResponse             = Response{Status: 500, Result: "internal server error"}
+)
+
+func TestDeleteStruct(t *testing.T) {
+	tests := []struct {
+		name     string
+		repo     groot.StructRepository
+		structId string
+		wantResp Response
+	}{
+		{
+			name:     "failed find struct, not found",
+			repo:     failedFindNotFoundRepository,
+			structId: "ABC123",
+			wantResp: findStructNotFoundResponse,
+		},
+		{
+			name:     "failed find struct, other error",
+			repo:     failedFindOtherErrRepository,
+			structId: "ABC123",
+			wantResp: findStructOtherErrResponse,
+		},
+		{
+			name:     "failed update struct, internal error",
+			repo:     failedDeleteOtherErrorRepository,
+			structId: "ABC123",
+			wantResp: deleteFailedResponse,
+		},
+		{
+			name:     "success delete struct",
+			repo:     successDeleteRepository,
+			structId: "ABC123",
+			wantResp: successDeleteStructResponse,
+		},
+	}
+
+	for i, tc := range tests {
+		no := i + 1
+		t.Run(fmt.Sprintf("Test no %d %s", no, tc.name), func(t *testing.T) {
+			svc := NewStructService(tc.repo)
+			resp := svc.Delete(tc.structId)
+
+			if diff := deep.Equal(resp, tc.wantResp); diff != nil {
+				t.Error(diff)
+			}
+		})
+	}
+}

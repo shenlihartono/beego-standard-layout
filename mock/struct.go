@@ -7,6 +7,7 @@ type StructRepository struct {
 	ErrCreate error
 	ErrStruct error
 	ErrUpdate error
+	ErrDelete error
 
 	TheStruct  groot.Struct
 	TheStructs []groot.Struct
@@ -28,4 +29,6 @@ func (s StructRepository) Update(req groot.Struct) error {
 	return s.ErrUpdate
 }
 
-func (s StructRepository) Delete(ID string) error { return nil }
+func (s StructRepository) Delete(ID string) error {
+	return s.ErrDelete
+}

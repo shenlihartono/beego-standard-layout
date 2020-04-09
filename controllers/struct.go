@@ -52,15 +52,11 @@ func (s *StructController) Create() {
 // @Description Find one struct by id
 // @Param	structId	path 	string		true	"the struct id you want to find"
 // @Success 200 {result} the Struct
-// @Failure 400 bad request
 // @Failure 404 struct not found
 // @Failure 500 internal server error
 // @router /:structId [get]
 func (s *StructController) Struct() {
 	structId := s.Ctx.Input.Param(":structId")
-	if structId == "" {
-		s.CustomAbort(400, "bad request")
-	}
 
 	svc := service.NewStructService(repo)
 	resp := svc.Struct(structId)
@@ -114,6 +110,27 @@ func (s *StructController) Update() {
 
 	svc := service.NewStructService(repo)
 	resp := svc.UpdateStruct(structId, req)
+
+	if resp.Status != 200 {
+		body := resp.Result.(string)
+		s.CustomAbort(resp.Status, body)
+	}
+
+	s.Data["json"] = resp.Result
+	s.ServeJSON()
+}
+
+// @Description Delete one struct by ID
+// @Param	structId	path 	string		true	"the struct id you want to delete"
+// @Success 200 {string} success delete struct
+// @Failure 404 struct not found
+// @Failure 500 internal server error
+// @router /:structId [delete]
+func (s *StructController) DeleteStruct() {
+	structId := s.Ctx.Input.Param(":structId")
+
+	svc := service.NewStructService(repo)
+	resp := svc.Delete(structId)
 
 	if resp.Status != 200 {
 		body := resp.Result.(string)

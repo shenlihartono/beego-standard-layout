@@ -94,9 +94,6 @@
                     "200": {
                         "description": "{result} the Struct"
                     },
-                    "400": {
-                        "description": "bad request"
-                    },
                     "404": {
                         "description": "struct not found"
                     },
@@ -134,6 +131,32 @@
                     },
                     "400": {
                         "description": "bad request"
+                    },
+                    "404": {
+                        "description": "struct not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "structs"
+                ],
+                "description": "Delete one struct by ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "structId",
+                        "description": "the struct id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} success delete struct"
                     },
                     "404": {
                         "description": "struct not found"

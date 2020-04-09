@@ -52,4 +52,13 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["beego-standard-layout/controllers:StructController"] = append(beego.GlobalControllerRouter["beego-standard-layout/controllers:StructController"],
+        beego.ControllerComments{
+            Method: "DeleteStruct",
+            Router: `/:structId`,
+            AllowHTTPMethods: []string{"delete"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
 }
