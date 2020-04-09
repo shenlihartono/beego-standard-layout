@@ -1,4 +1,4 @@
-package response
+package service
 
 import (
 	"github.com/go-test/deep"
@@ -28,7 +28,7 @@ func TestResponse_New(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			have := New(tc.status, tc.result)
+			have := NewResponse(tc.status, tc.result)
 
 			if diff := deep.Equal(have, tc.want); diff != nil {
 				t.Error(diff)

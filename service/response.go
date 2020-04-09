@@ -1,11 +1,11 @@
 // Package service contains the response type returned by service.
-package response
+package service
 
 type Response struct {
 	Status int         `json:"status"`
 	Result interface{} `json:"result"`
 }
 
-func New(status int, body interface{}) Response {
+func NewResponse(status int, body interface{}) Response {
 	return Response{Status: status, Result: body}
 }

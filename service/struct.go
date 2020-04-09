@@ -3,7 +3,6 @@ package service
 
 import (
 	groot "beego-standard-layout"
-	"beego-standard-layout/response"
 )
 
 type StructService struct {
@@ -14,11 +13,15 @@ func NewStructService(repo groot.StructRepository) StructService {
 	return StructService{repo: repo}
 }
 
-func (s StructService) CreateStruct(request groot.StructRequest) response.Response {
+func (s StructService) CreateStruct(request groot.StructRequest) Response {
 	str, err := s.repo.Create(request)
 	if err != nil {
-		return response.New(StatusInternalServerError, "internal server error")
+		return NewResponse(StatusInternalServerError, "internal server error")
 	}
 
-	return response.New(StatusOK, str)
+	return NewResponse(StatusOK, str)
 }
+
+//func (s StructService) Struct() Response {
+//
+//}
