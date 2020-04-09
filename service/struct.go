@@ -3,6 +3,7 @@ package service
 
 import (
 	groot "beego-standard-layout"
+	"errors"
 )
 
 type StructService struct {
@@ -22,6 +23,17 @@ func (s StructService) CreateStruct(request groot.StructRequest) Response {
 	return NewResponse(StatusOK, str)
 }
 
-//func (s StructService) Struct() Response {
-//
-//}
+var errStructNotFound = errors.New("struct not found")
+
+func (s StructService) Struct(ID string) Response {
+	str, err := s.repo.Struct(ID)
+	if err != nil {
+		if err.Error() == errStructNotFound.Error() {
+			return NewResponse(StatusNotFound, "struct not found")
+		}
+
+		return NewResponse(StatusInternalServerError, "internal server error")
+	}
+
+	return NewResponse(StatusOK, str)
+}

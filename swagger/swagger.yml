@@ -33,9 +33,29 @@ paths:
           $ref: '#/definitions/groot.StructRequest'
       responses:
         "200":
-          description: '{result} groot.Struct'
+          description: '{result} the Struct'
         "400":
           description: bad request
+        "500":
+          description: internal server error
+  /structs/{structId}:
+    get:
+      tags:
+      - structs
+      description: Find 1 struct
+      parameters:
+      - in: path
+        name: structId
+        description: the struct id you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{result} the Struct'
+        "400":
+          description: bad request
+        "404":
+          description: struct not found
         "500":
           description: internal server error
 definitions:

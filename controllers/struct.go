@@ -16,7 +16,7 @@ type StructController struct {
 
 // @Description Create Struct
 // @Param	body		body 	groot.StructRequest		true	"The struct content, e.q {"value": 1}"
-// @Success 200 {result} groot.Struct
+// @Success 200 {result} the Struct
 // @Failure 400 bad request
 // @Failure 500 internal server error
 // @router / [post]
@@ -31,6 +31,32 @@ func (s *StructController) Create() {
 	repo := inmemory.NewStructRepository()
 	svc := service.NewStructService(repo)
 	resp := svc.CreateStruct(req)
+
+	if resp.Status != 200 {
+		body := resp.Result.(string)
+		s.CustomAbort(resp.Status, body)
+	}
+
+	s.Data["json"] = resp.Result
+	s.ServeJSON()
+}
+
+// @Description Find 1 struct
+// @Param	structId	path 	string		true	"the struct id you want to get"
+// @Success 200 {result} the Struct
+// @Failure 400 bad request
+// @Failure 404 struct not found
+// @Failure 500 internal server error
+// @router /:structId [get]
+func (s *StructController) Struct() {
+	structId := s.Ctx.Input.Param(":structId")
+	if structId == "" {
+		s.CustomAbort(400, "bad request")
+	}
+
+	repo := inmemory.NewStructRepository()
+	svc := service.NewStructService(repo)
+	resp := svc.Struct(structId)
 
 	if resp.Status != 200 {
 		body := resp.Result.(string)
