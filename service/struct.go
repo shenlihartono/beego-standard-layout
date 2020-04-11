@@ -3,7 +3,7 @@ package service
 
 import (
 	groot "beego-standard-layout"
-	"errors"
+	"github.com/astaxie/beego/orm"
 )
 
 type StructService struct {
@@ -23,12 +23,10 @@ func (s StructService) CreateStruct(request groot.StructRequest) Response {
 	return NewResponse(StatusOK, str)
 }
 
-var errStructNotFound = errors.New("struct not found")
-
 func (s StructService) Struct(ID string) Response {
 	str, err := s.repo.Struct(ID)
 	if err != nil {
-		if err.Error() == errStructNotFound.Error() {
+		if err == orm.ErrNoRows {
 			return NewResponse(StatusNotFound, "struct not found")
 		}
 
@@ -41,7 +39,7 @@ func (s StructService) Struct(ID string) Response {
 func (s StructService) Structs() Response {
 	str, err := s.repo.Structs()
 	if err != nil {
-		if err.Error() == errStructNotFound.Error() {
+		if err == orm.ErrNoRows {
 			return NewResponse(StatusNotFound, "struct not found")
 		}
 
@@ -54,7 +52,7 @@ func (s StructService) Structs() Response {
 func (s StructService) UpdateStruct(ID string, request groot.StructRequest) Response {
 	str, err := s.repo.Struct(ID)
 	if err != nil {
-		if err.Error() == errStructNotFound.Error() {
+		if err == orm.ErrNoRows {
 			return NewResponse(StatusNotFound, "struct not found")
 		}
 
@@ -73,7 +71,7 @@ func (s StructService) UpdateStruct(ID string, request groot.StructRequest) Resp
 func (s StructService) Delete(ID string) Response {
 	_, err := s.repo.Struct(ID)
 	if err != nil {
-		if err.Error() == errStructNotFound.Error() {
+		if err == orm.ErrNoRows {
 			return NewResponse(StatusNotFound, "struct not found")
 		}
 
