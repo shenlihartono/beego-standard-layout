@@ -56,7 +56,7 @@ func TestConvertRequest(t *testing.T) {
 			reqByte:    []byte(`{"id": "xyz", "value": 123}`),
 			reqStruct:  emptyStruct,
 			wantErr:    false,
-			wantStruct: groot.Struct{ID: "xyz", Value: 123},
+			wantStruct: groot.Struct{StructID: "xyz", Value: 123},
 		},
 	}
 

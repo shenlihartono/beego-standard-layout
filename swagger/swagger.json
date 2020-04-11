@@ -144,7 +144,7 @@
                 "tags": [
                     "structs"
                 ],
-                "description": "Delete one struct by ID",
+                "description": "Delete one struct by StructID",
                 "parameters": [
                     {
                         "in": "path",

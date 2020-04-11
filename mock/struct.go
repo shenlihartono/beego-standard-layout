@@ -29,6 +29,6 @@ func (s StructRepository) Update(req groot.Struct) error {
 	return s.ErrUpdate
 }
 
-func (s StructRepository) Delete(ID string) error {
+func (s StructRepository) Delete(ID groot.Struct) error {
 	return s.ErrDelete
 }
