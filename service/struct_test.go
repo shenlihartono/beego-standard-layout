@@ -5,6 +5,7 @@ import (
 	"beego-standard-layout/mock"
 	"errors"
 	"fmt"
+	"github.com/astaxie/beego/orm"
 	"github.com/go-test/deep"
 	"testing"
 )
@@ -59,7 +60,7 @@ var (
 	findSuccessRepository     = mock.StructRepository{TheStruct: findSuccessResult}
 	findStructSuccessResponse = Response{Status: 200, Result: findSuccessResult}
 
-	failedFindNotFoundRepository = mock.StructRepository{ErrStruct: errStructNotFound}
+	failedFindNotFoundRepository = mock.StructRepository{ErrStruct: orm.ErrNoRows}
 	findStructNotFoundResponse   = Response{Status: 404, Result: "struct not found"}
 
 	failedFindOtherErrRepository = mock.StructRepository{ErrStruct: errors.New("error find struct")}

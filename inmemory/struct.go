@@ -3,13 +3,11 @@ package inmemory
 
 import (
 	groot "beego-standard-layout"
-	"errors"
+	"github.com/astaxie/beego/orm"
 	"strconv"
 	"strings"
 	"time"
 )
-
-var errStructNotFound = errors.New("struct not found")
 
 type StructRepository map[string]groot.Struct
 
@@ -36,12 +34,12 @@ func (s StructRepository) Struct(ID string) (groot.Struct, error) {
 		return v, nil
 	}
 
-	return groot.Struct{}, errStructNotFound
+	return groot.Struct{}, orm.ErrNoRows
 }
 
 func (s StructRepository) Structs() ([]groot.Struct, error) {
 	if len(s) < 1 {
-		return nil, errStructNotFound
+		return nil, orm.ErrNoRows
 	}
 
 	var structs []groot.Struct
