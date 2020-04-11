@@ -14,8 +14,8 @@ type StructRepository map[string]groot.Struct
 func NewStructRepository() StructRepository {
 	// setup the initial structs in repository
 	repo := map[string]groot.Struct{
-		"id1": {"id1", 1},
-		"id2": {"id2", 2},
+		"id1": {StructID: "id1", Value: 1},
+		"id2": {StructID: "id2", Value: 2},
 	}
 
 	return repo
@@ -23,7 +23,7 @@ func NewStructRepository() StructRepository {
 
 func (s StructRepository) Create(req groot.StructRequest) (groot.Struct, error) {
 	ID := strings.ToUpper(strconv.FormatInt(time.Now().Unix(), 16))
-	newStruct := groot.Struct{ID: ID, Value: req.Value}
+	newStruct := groot.Struct{StructID: ID, Value: req.Value}
 	s[ID] = newStruct
 
 	return newStruct, nil
@@ -50,14 +50,14 @@ func (s StructRepository) Structs() ([]groot.Struct, error) {
 	return structs, nil
 }
 
-func (s StructRepository) Update(req groot.Struct) error {
-	s[req.ID] = req
+func (s StructRepository) Update(str groot.Struct) error {
+	s[str.StructID] = str
 
 	return nil
 }
 
-func (s StructRepository) Delete(ID string) error {
-	delete(s, ID)
+func (s StructRepository) Delete(str groot.Struct) error {
+	delete(s, str.StructID)
 
 	return nil
 }

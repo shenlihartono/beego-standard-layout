@@ -69,7 +69,7 @@ func (s StructService) UpdateStruct(ID string, request groot.StructRequest) Resp
 }
 
 func (s StructService) Delete(ID string) Response {
-	_, err := s.repo.Struct(ID)
+	str, err := s.repo.Struct(ID)
 	if err != nil {
 		if err == orm.ErrNoRows {
 			return NewResponse(StatusNotFound, "struct not found")
@@ -78,7 +78,7 @@ func (s StructService) Delete(ID string) Response {
 		return NewResponse(StatusInternalServerError, "internal server error")
 	}
 
-	err = s.repo.Delete(ID)
+	err = s.repo.Delete(str)
 	if err != nil {
 		return NewResponse(StatusInternalServerError, "internal server error")
 	}

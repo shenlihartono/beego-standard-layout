@@ -2,8 +2,13 @@
 package groot
 
 type Struct struct {
-	ID    string `json:"id"`
-	Value int    `json:"value"`
+	ID       int64  `orm:"pk;auto;column(id)" json:"-"`
+	StructID string `orm:"column(struct_id)" json:"id"`
+	Value    int    `orm:"column(value)" json:"value"`
+}
+
+func (s *Struct) TableName() string {
+	return "struct"
 }
 
 type StructRepository interface {
@@ -11,7 +16,7 @@ type StructRepository interface {
 	Struct(ID string) (Struct, error)
 	Structs() ([]Struct, error)
 	Update(Struct) error
-	Delete(ID string) error
+	Delete(Struct) error
 }
 
 type StructRequest struct {

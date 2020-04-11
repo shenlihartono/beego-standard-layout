@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	createSuccessResult     = groot.Struct{ID: "abc123", Value: 500}
+	createSuccessResult     = groot.Struct{StructID: "abc123", Value: 500}
 	createSuccessResponse   = Response{Status: 200, Result: createSuccessResult}
 	createSuccessRepository = mock.StructRepository{TheStruct: createSuccessResult}
 
@@ -56,7 +56,7 @@ func TestCreateStruct(t *testing.T) {
 }
 
 var (
-	findSuccessResult         = groot.Struct{ID: "ABC123", Value: 500}
+	findSuccessResult         = groot.Struct{StructID: "ABC123", Value: 500}
 	findSuccessRepository     = mock.StructRepository{TheStruct: findSuccessResult}
 	findStructSuccessResponse = Response{Status: 200, Result: findSuccessResult}
 
@@ -109,8 +109,8 @@ func TestFindStruct(t *testing.T) {
 
 var (
 	findSuccessResults = []groot.Struct{
-		{ID: "one", Value: 1},
-		{ID: "two", Value: 2},
+		{StructID: "one", Value: 1},
+		{StructID: "two", Value: 2},
 	}
 	findStructsSuccessRepository = mock.StructRepository{TheStructs: findSuccessResults}
 	findStructsSuccessResponse   = Response{Status: 200, Result: findSuccessResults}
@@ -154,9 +154,9 @@ func TestFindStructs(t *testing.T) {
 
 var (
 	updateSuccessRepository = mock.StructRepository{
-		TheStruct: groot.Struct{ID: "ABC123", Value: 1500},
+		TheStruct: groot.Struct{StructID: "ABC123", Value: 1500},
 	}
-	updateSuccessResult   = groot.Struct{ID: "ABC123", Value: 2000}
+	updateSuccessResult   = groot.Struct{StructID: "ABC123", Value: 2000}
 	updateSuccessResponse = Response{Status: StatusOK, Result: updateSuccessResult}
 
 	updateFailedOtherErrorRepository = mock.StructRepository{ErrUpdate: errors.New("error update struct")}

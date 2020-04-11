@@ -5,18 +5,20 @@ import (
 	groot "beego-standard-layout"
 	"beego-standard-layout/inmemory"
 	"beego-standard-layout/json"
+	"beego-standard-layout/postgres"
 	"beego-standard-layout/service"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
 )
 
 var repo groot.StructRepository
 
-func init() {
-	r := beego.AppConfig.DefaultString("RepositoryMode", "inmemory")
-	if r == "inmemory" {
-		repo = inmemory.NewStructRepository()
-	}
-	//TODO next: postgres impl here
+func InitPostgresRepo(orm orm.Ormer) {
+	repo = postgres.NewStructRepository(orm)
+}
+
+func InitInmemoryRepo() {
+	repo = inmemory.NewStructRepository()
 }
 
 // Operations about struct
@@ -120,7 +122,7 @@ func (s *StructController) Update() {
 	s.ServeJSON()
 }
 
-// @Description Delete one struct by ID
+// @Description Delete one struct by StructID
 // @Param	structId	path 	string		true	"the struct id you want to delete"
 // @Success 200 {string} success delete struct
 // @Failure 404 struct not found
